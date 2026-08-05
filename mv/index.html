@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ko" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>0과 1 사이, 그리고 나 | Taehyun's MV</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        sunset: '#E65100',
+                        codeblue: '#00D8FF',
+                        darkbg: '#0D1117',
+                        cardbg: '#161B22',
+                        accent: '#238636'
+                    },
+                    fontFamily: {
+                        sans: ['Pretendard', 'Noto Sans KR', 'sans-serif'],
+                        mono: ['Fira Code', 'Monaco', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0d1117;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #30363d;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #484f58;
+        }
+        .code-glitch {
+            background: linear-gradient(90deg, #00d8ff22 0%, #00d8ff00 100%);
+        }
+    </style>
+</head>
+<body class="bg-darkbg text-gray-100 font-sans min-h-screen flex flex-col antialiased">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-darkbg/90 backdrop-blur-md border-b border-gray-800 px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-sunset via-codeblue to-indigo-600 flex items-center justify-center font-bold text-xl shadow-lg shadow-codeblue/10">
+                &lt;&gt;
+            </div>
+            <div>
+                <h1 class="font-bold text-lg leading-tight bg-clip-text text-transparent bg-gradient-to-r from-orange-400 via-sky-400 to-indigo-300">
+                    0과 1 사이, 그리고 나
+                </h1>
+                <p class="text-xs text-gray-400">태현의 컴퓨터공학과 진학 스토리 MV</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-3">
+            <a href="../index.html" class="flex items-center gap-2 px-3 py-1.5 text-xs font-mono bg-gray-800 hover:bg-gray-700 text-gray-200 border border-gray-700 rounded-md transition-all">
+                <i data-lucide="home" class="w-4 h-4"></i>
+                <span>홈으로</span>
+            </a>
+            <button id="devToolsBtn" class="flex items-center gap-2 px-3 py-1.5 text-xs font-mono bg-gray-800 hover:bg-gray-700 text-codeblue border border-codeblue/30 rounded-md transition-all">
+                <i data-lucide="terminal" class="w-4 h-4"></i>
+                <span>F12 개발자 도구</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Left Column: Video Player & Narration -->
+        <section class="lg:col-span-8 flex flex-col gap-6">
+            
+            <!-- Video Container -->
+            <div class="relative bg-black rounded-2xl overflow-hidden shadow-2xl border border-gray-800 group">
+                <video id="mvVideo" class="w-full aspect-video object-cover" poster="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1200&q=80">
+                    <source src="mv.mp4" type="video/mp4">
+                    브라우저가 비디오 태그를 지원하지 않습니다.
+                </video>
+
+                <!-- Video Fallback Overlay (Shown if video fails to load) -->
+                <div id="videoFallback" class="absolute inset-0 bg-gradient-to-t from-darkbg via-cardbg/80 to-transparent flex flex-col items-center justify-center p-6 text-center transition-opacity duration-300 pointer-events-none opacity-0">
+                    <i data-lucide="film" class="w-16 h-16 text-codeblue mb-4 animate-bounce"></i>
+                    <h2 class="text-2xl font-bold text-white mb-2">mv.mp4 준비됨</h2>
+                    <p class="text-gray-300 text-sm max-w-md mb-4">
+                        동일한 경로에 <code class="bg-black/50 px-2 py-1 rounded text-codeblue font-mono">mv.mp4</code> 파일이 위치하면 재생됩니다.
+                    </p>
+                    <span class="inline-block px-3 py-1 bg-sky-500/10 text-sky-400 text-xs rounded-full border border-sky-500/20">
+                        현재 장면 시뮬레이션 모드 작동 중
+                    </span>
+                </div>
+
+                <!-- Custom Player Controls Bar -->
+                <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-4 flex flex-col gap-2 transition-opacity duration-300 group-hover:opacity-100 opacity-90">
+                    <!-- Progress Bar -->
+                    <div class="w-full bg-gray-700/60 h-1.5 rounded-full cursor-pointer relative overflow-hidden group/progress" id="progressContainer">
+                        <div id="progressBar" class="bg-gradient-to-r from-orange-500 to-codeblue h-full w-0 transition-all duration-100"></div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between text-sm pt-1">
+                        <div class="flex items-center gap-4">
+                            <button id="playBtn" class="text-white hover:text-codeblue transition-colors">
+                                <i data-lucide="play" class="w-6 h-6" id="playIcon"></i>
+                            </button>
+                            <div class="flex items-center gap-2">
+                                <button id="muteBtn" class="text-gray-300 hover:text-white">
+                                    <i data-lucide="volume-2" class="w-5 h-5" id="volumeIcon"></i>
+                                </button>
+                                <span id="timeDisplay" class="text-xs text-gray-300 font-mono">00:00 / 00:00</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-3">
+                            <span id="currentSceneTag" class="text-xs px-2.5 py-1 rounded bg-orange-500/20 text-orange-300 border border-orange-500/30 font-medium">
+                                Frame 1: 진로 고민의 시작
+                            </span>
+                            <button id="fullscreenBtn" class="text-gray-300 hover:text-white">
+                                <i data-lucide="maximize" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Active Frame Description Box -->
+            <div id="activeFrameCard" class="bg-cardbg rounded-xl p-6 border border-gray-800 shadow-lg relative overflow-hidden transition-all duration-300">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-orange-500/10 rounded-full blur-2xl -mr-10 -mt-10"></div>
+                
+                <div class="flex items-center gap-3 mb-3">
+                    <span id="frameBadge" class="px-3 py-1 bg-orange-500/20 text-orange-400 font-mono text-xs font-semibold rounded-full border border-orange-500/30">
+                        FRAME 01
+                    </span>
+                    <h3 id="frameTitle" class="text-xl font-bold text-white">진로 고민의 시작</h3>
+                </div>
+
+                <!-- Narration Quote -->
+                <div class="my-4 p-4 rounded-lg bg-darkbg/70 border-l-4 border-orange-500 italic text-gray-200">
+                    <p id="frameNarration" class="text-base leading-relaxed">
+                        "정답이 정해진 세상 속에서, 나만 멈춰 서 있는 것 같았다. 남들을 따라 '컴공'이라 적었지만, 내 안에는 진짜 이유가 없었다."
+                    </p>
+                </div>
+
+                <!-- Technical Details -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-gray-400 mt-4 pt-4 border-t border-gray-800">
+                    <div>
+                        <span class="text-gray-500 font-medium block mb-1">카메라 연출</span>
+                        <p id="frameCamera" class="text-gray-300">태현의 옆모습 바스트 샷에서 서서히 줌인되며 빈 종이의 '희망 학과' 빈칸을 비춤.</p>
+                    </div>
+                    <div>
+                        <span class="text-gray-500 font-medium block mb-1">조명 & 색감</span>
+                        <p id="frameMood" class="text-gray-300">따스하고 씁쓸한 느낌의 짙은 노을빛.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- F12 Interactive Simulation Terminal (Hidden by default) -->
+            <div id="terminalModal" class="hidden bg-gray-900 rounded-xl border border-codeblue/40 shadow-2xl overflow-hidden font-mono text-xs">
+                <div class="bg-gray-800 px-4 py-2 flex justify-between items-center border-b border-gray-700">
+                    <div class="flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full bg-red-500 inline-block"></span>
+                        <span class="w-3 h-3 rounded-full bg-yellow-500 inline-block"></span>
+                        <span class="w-3 h-3 rounded-full bg-green-500 inline-block"></span>
+                        <span class="text-gray-400 ml-2">Developer Tools - Console (F12)</span>
+                    </div>
+                    <button id="closeTerminalBtn" class="text-gray-400 hover:text-white">✕</button>
+                </div>
+                <div class="p-4 text-green-400 space-y-2 h-48 overflow-y-auto" id="terminalOutput">
+                    <p class="text-gray-500">// [Frame 2] 호기심의 불꽃 - 학교 홈페이지 에러 디버깅 중...</p>
+                    <p><span class="text-red-400">[ERROR]</span> Uncaught TypeError: Cannot read property 'mealTable' of undefined</p>
+                    <p class="text-sky-300">&gt; fixing code: document.querySelector('#meal-btn').disabled = false;</p>
+                    <p class="text-yellow-300">[SUCCESS] 코드 한 줄 수정 완료. 버튼이 활성화되었습니다!</p>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Right Column: Timeline / Storyboard List -->
+        <section class="lg:col-span-4 flex flex-col gap-4">
+            <div class="flex items-center justify-between">
+                <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                    <i data-lucide="clapperboard" class="w-5 h-5 text-codeblue"></i>
+                    타임라인 스토리보드
+                </h2>
+                <span class="text-xs text-gray-400">총 7개 장면</span>
+            </div>
+
+            <!-- Story Cards List -->
+            <div class="space-y-3 overflow-y-auto max-h-[calc(100vh-220px)] pr-1" id="timelineList">
+                
+                <!-- Card 1 -->
+                <div class="timeline-item cursor-pointer bg-cardbg hover:bg-gray-800 border-l-4 border-orange-500 p-3.5 rounded-r-xl border-y border-r border-gray-800 transition-all active-card" data-index="0">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="text-xs font-mono text-orange-400 font-bold">FRAME 01</span>
+                    </div>
+                    <h4 class="font-bold text-sm text-white mb-1">진로 고민의 시작</h4>
+                    <p class="text-xs text-gray-400 line-clamp-2">노을빛 교실, 빈 희망 학과 칸을 앞에 두고 느끼는 진로에 대한 막막함</p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="timeline-item cursor-pointer bg-cardbg hover:bg-gray-800 border-l-4 border-sky-500/40 p-3.5 rounded-r-xl border-y border-r border-gray-800 transition-all opacity-80" data-index="1">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="text-xs font-mono text-sky-400 font-bold">FRAME 02</span>
+                    </div>
+                    <h4 class="font-bold text-sm text-white mb-1">호기심의 불꽃 (F12)</h4>
+                    <p class="text-xs text-gray-400 line-clamp-2">한밤중 에러 창에서 F12 버튼으로 마주한 0과 1의 새로운 세계</p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="timeline-item cursor-pointer bg-cardbg hover:bg-gray-800 border-l-4 border-indigo-500/40 p-3.5 rounded-r-xl border-y border-r border-gray-800 transition-all opacity-80" data-index="2">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="text-xs font-mono text-indigo-400 font-bold">FRAME 03</span>
+                    </div>
+                    <h4 class="font-bold text-sm text-white mb-1">첫 성공과 전율</h4>
+                    <p class="text-xs text-gray-400 line-clamp-2">직접 수정한 코드 한 줄로 멈춰 있던 홈페이지 버튼을 살려낸 순간</p>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="timeline-item cursor-pointer bg-cardbg hover:bg-gray-800 border-l-4 border-blue-500/40 p-3.5 rounded-r-xl border-y border-r border-gray-800 transition-all opacity-80" data-index="3">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="text-xs font-mono text-blue-400 font-bold">FRAME 04</span>
+                    </div>
+                    <h4 class="font-bold text-sm text-white mb-1">깊어지는 몰입</h4>
+                    <p class="text-xs text-gray-400 line-clamp-2">밤샘 코딩으로 제작한 학교 급식 정보 실시간 파싱 프로그램</p>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="timeline-item cursor-pointer bg-cardbg hover:bg-gray-800 border-l-4 border-green-500/40 p-3.5 rounded-r-xl border-y border-r border-gray-800 transition-all opacity-80" data-index="4">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="text-xs font-mono text-green-400 font-bold">FRAME 05</span>
+                    </div>
+                    <h4 class="font-bold text-sm text-white mb-1">세상과의 연결</h4>
+                    <p class="text-xs text-gray-400 line-clamp-2">내가 만든 앱으로 친구들에게 편리함과 미소를 선사한 보람</p>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="timeline-item cursor-pointer bg-cardbg hover:bg-gray-800 border-l-4 border-purple-500/40 p-3.5 rounded-r-xl border-y border-r border-gray-800 transition-all opacity-80" data-index="5">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="text-xs font-mono text-purple-400 font-bold">FRAME 06</span>
+                    </div>
+                    <h4 class="font-bold text-sm text-white mb-1">진짜 나의 이야기</h4>
+                    <p class="text-xs text-gray-400 line-clamp-2">직접 경험하고 증명한 이야기로 채워가는 자기소개서 작성</p>
+                </div>
+
+                <!-- Card 7 -->
+                <div class="timeline-item cursor-pointer bg-cardbg hover:bg-gray-800 border-l-4 border-amber-500/40 p-3.5 rounded-r-xl border-y border-r border-gray-800 transition-all opacity-80" data-index="6">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="text-xs font-mono text-amber-400 font-bold">FRAME 07</span>
+                    </div>
+                    <h4 class="font-bold text-sm text-white mb-1">미래를 향한 발걸음</h4>
+                    <p class="text-xs text-gray-400 line-clamp-2">0과 1 사이에서 찾은 본인만의 목소리, 당찬 컴공 진학의 시작</p>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800 mt-auto py-4 px-6 text-center text-xs text-gray-500">
+        <p>© 0과 1 사이, 그리고 나 - 컴퓨터공학과 진학 스토리 MV Web Player</p>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Story Framework Data
+        const frames = [
+            {
+                badge: "FRAME 01",
+                badgeColor: "bg-orange-500/20 text-orange-400 border-orange-500/30",
+                borderColor: "border-orange-500",
+                title: "진로 고민의 시작",
+                narration: "정답이 정해진 세상 속에서, 나만 멈춰 서 있는 것 같았다. 남들을 따라 '컴공'이라 적었지만, 내 안에는 진짜 이유가 없었다.",
+                camera: "태현의 옆모습 바스트 샷에서 서서히 줌인되며 빈 종이의 '희망 학과' 빈칸을 비춤.",
+                mood: "따스하고 씁쓸한 느낌의 짙은 노을빛.",
+                poster: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1200&q=80"
+            },
+            {
+                badge: "FRAME 02",
+                badgeColor: "bg-sky-500/20 text-sky-400 border-sky-500/30",
+                borderColor: "border-sky-500",
+                title: "호기심의 불꽃 (F12)",
+                narration: "그날 밤, 우연히 마주한 학교 홈페이지의 에러 창. 호기심에 누른 F12 화면 속에는 0과 1로 이루어진 낯설고 거대한 세계가 있었다.",
+                camera: "노트북 화면 너머 태현의 얼굴을 정면으로 바라보는 구도. 안경 렌즈에 푸른 소스 코드 불빛이 반사됨.",
+                mood: "차가운 모니터의 블루 톤과 책상 스탠드의 은은한 옐로우 톤의 대비.",
+                poster: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80"
+            },
+            {
+                badge: "FRAME 03",
+                badgeColor: "bg-indigo-500/20 text-indigo-400 border-indigo-500/30",
+                borderColor: "border-indigo-500",
+                title: "첫 성공과 전율",
+                narration: "코드 한 줄을 바꾸자 멈춰 있던 화면이 움직였다. 내가 이 세계의 규칙을 직접 바꾸는 창조자가 된 듯한 소름이 돋았다.",
+                camera: "키보드를 두드리는 손가락 타이트 클로즈업 후, 미소 짓는 태현의 얼굴로 빠르게 팬(Pan).",
+                mood: "성공하는 순간 모니터 화면이 밝아지며 얼굴을 환하게 비춤.",
+                poster: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80"
+            },
+            {
+                badge: "FRAME 04",
+                badgeColor: "bg-blue-500/20 text-blue-400 border-blue-500/30",
+                borderColor: "border-blue-500",
+                title: "깊어지는 몰입",
+                narration: "더 이상 공식만 외우지 않았다. 학교 급식표를 알려주는 나만의 프로그램을 짜며, 막힌 문제를 논리적으로 풀어내는 몰입에 깊이 빠져들었다.",
+                camera: "책상 위를 서서히 회전하며 밤에서 이른 아침으로 시간이 흐르는 타임랩스 효과 연출.",
+                mood: "방안의 스탠드 불빛이 새벽의 푸르스름한 자연광으로 자연스럽게 변해감.",
+                poster: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=1200&q=80"
+            },
+            {
+                badge: "FRAME 05",
+                badgeColor: "bg-green-500/20 text-green-400 border-green-500/30",
+                borderColor: "border-green-500",
+                title: "세상과의 연결",
+                narration: "내가 밤새 만든 코드가 누군가에게 작은 편리함과 미소를 줄 수 있다는 것. 그것이 내가 찾은 컴공에 가고 싶은 진짜 이유였다.",
+                camera: "친구들의 활기찬 반응을 담는 미디엄 샷 후, 부끄러워하면서도 뿌듯해하는 태현의 표정 클로즈업.",
+                mood: "활기차고 밝은 학교 복도의 자연광.",
+                poster: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80"
+            },
+            {
+                badge: "FRAME 06",
+                badgeColor: "bg-purple-500/20 text-purple-400 border-purple-500/30",
+                borderColor: "border-purple-500",
+                title: "진짜 나의 이야기",
+                narration: "더 이상 남들의 기준이나 화려한 껍데기는 필요 없었다. 생기부 안에는 나만이 겪고 증명해 낸 진짜 이야기가 채워지고 있었다.",
+                camera: "타이핑되는 화면 클로즈업 후, 확신에 찬 표정으로 자소서를 바라보는 태현의 뒷모습으로 페이드아웃.",
+                mood: "집중도를 높여주는 차분하고 정돈된 웜톤 조명.",
+                poster: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1200&q=80"
+            },
+            {
+                badge: "FRAME 07",
+                badgeColor: "bg-amber-500/20 text-amber-400 border-amber-500/30",
+                borderColor: "border-amber-500",
+                title: "미래를 향한 발걸음",
+                narration: "0과 1 사이에서 찾은 나의 목소리. 나의 진짜 컴퓨터공학과 진학기는 이제 시작이다.",
+                camera: "태현이 정면을 보며 걸어오는 로우 앵글 샷에서 하늘로 서서히 틸트 업(Tilt Up).",
+                mood: "아주 맑고 눈부신 오전 햇살, 희망찬 분위기.",
+                poster: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=80"
+            }
+        ];
+
+        // DOM Elements
+        const video = document.getElementById('mvVideo');
+        const playBtn = document.getElementById('playBtn');
+        const playIcon = document.getElementById('playIcon');
+        const progressBar = document.getElementById('progressBar');
+        const progressContainer = document.getElementById('progressContainer');
+        const timeDisplay = document.getElementById('timeDisplay');
+        const videoFallback = document.getElementById('videoFallback');
+        const timelineItems = document.querySelectorAll('.timeline-item');
+        const devToolsBtn = document.getElementById('devToolsBtn');
+        const terminalModal = document.getElementById('terminalModal');
+        const closeTerminalBtn = document.getElementById('closeTerminalBtn');
+
+        // Dynamic Frame Details Elements
+        const frameBadge = document.getElementById('frameBadge');
+        const frameTitle = document.getElementById('frameTitle');
+        const frameNarration = document.getElementById('frameNarration');
+        const frameCamera = document.getElementById('frameCamera');
+        const frameMood = document.getElementById('frameMood');
+        const currentSceneTag = document.getElementById('currentSceneTag');
+
+        let currentFrameIndex = 0;
+
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Update Active Frame View
+        function updateActiveFrame(index) {
+            currentFrameIndex = index;
+            const data = frames[index];
+
+            // Update Frame Info Box
+            frameBadge.textContent = data.badge;
+            frameBadge.className = `px-3 py-1 font-mono text-xs font-semibold rounded-full border ${data.badgeColor}`;
+            frameTitle.textContent = data.title;
+            frameNarration.textContent = `"${data.narration}"`;
+            frameCamera.textContent = data.camera;
+            frameMood.textContent = data.mood;
+            currentSceneTag.textContent = `${data.badge}: ${data.title}`;
+
+            // Update Timeline UI Active State
+            timelineItems.forEach((item, idx) => {
+                if (idx === index) {
+                    item.classList.add('bg-gray-800', 'opacity-100');
+                    item.classList.remove('opacity-80', 'bg-cardbg');
+                } else {
+                    item.classList.remove('bg-gray-800', 'opacity-100');
+                    item.classList.add('opacity-80', 'bg-cardbg');
+                }
+            });
+
+            // Set Video poster or seek if loaded
+            if (video.duration) {
+                const targetTime = (video.duration / frames.length) * index;
+                video.currentTime = targetTime;
+            }
+        }
+
+        // Timeline item clicks
+        timelineItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const index = parseInt(item.getAttribute('data-index'));
+                updateActiveFrame(index);
+            });
+        });
+
+        // Toggle Play/Pause
+        function togglePlay() {
+            if (video.paused) {
+                video.play().catch(() => {
+                    // Show fallback notice if media missing
+                    videoFallback.classList.remove('opacity-0');
+                    setTimeout(() => videoFallback.classList.add('opacity-0'), 3000);
+                });
+                playIcon.setAttribute('data-lucide', 'pause');
+            } else {
+                video.pause();
+                playIcon.setAttribute('data-lucide', 'play');
+            }
+            lucide.createIcons();
+        }
+
+        playBtn.addEventListener('click', togglePlay);
+
+        // Video Time Update Logic
+        video.addEventListener('timeupdate', () => {
+            if (video.duration) {
+                const progress = (video.currentTime / video.duration) * 100;
+                progressBar.style.width = `${progress}%`;
+                
+                // Format Time Display
+                const curMins = Math.floor(video.currentTime / 60);
+                const curSecs = Math.floor(video.currentTime % 60);
+                const durMins = Math.floor(video.duration / 60);
+                const durSecs = Math.floor(video.duration % 60);
+                timeDisplay.textContent = `${curMins.toString().padStart(2, '0')}:${curSecs.toString().padStart(2, '0')} / ${durMins.toString().padStart(2, '0')}:${durSecs.toString().padStart(2, '0')}`;
+
+                // Auto match frame by time progress
+                const frameIndex = Math.min(
+                    Math.floor((video.currentTime / video.duration) * frames.length),
+                    frames.length - 1
+                );
+                if (frameIndex !== currentFrameIndex) {
+                    updateActiveFrame(frameIndex);
+                }
+            }
+        });
+
+        // Seek Progress Click
+        progressContainer.addEventListener('click', (e) => {
+            const rect = progressContainer.getBoundingClientRect();
+            const pos = (e.clientX - rect.left) / rect.width;
+            if (video.duration) {
+                video.currentTime = pos * video.duration;
+            }
+        });
+
+        // Check if video loaded or handle error
+        video.addEventListener('error', () => {
+            videoFallback.classList.remove('opacity-0');
+        });
+
+        // DevTools F12 Secret Modal Event
+        devToolsBtn.addEventListener('click', () => {
+            terminalModal.classList.toggle('hidden');
+        });
+
+        closeTerminalBtn.addEventListener('click', () => {
+            terminalModal.classList.add('hidden');
+        });
+
+        // Keyboard Shortcut F12
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'F12') {
+                e.preventDefault();
+                terminalModal.classList.toggle('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
