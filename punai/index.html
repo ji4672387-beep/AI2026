@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>부산 AI 인공지능 교육 소감 및 성찰문 - 이지후</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        ai: {
+                            purple: '#7c3aed',
+                            indigo: '#4f46e5',
+                            teal: '#0d9488'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Pretendard', sans-serif;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .dark .glass-card {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #2563eb, #7c3aed, #0d9488);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .dark .gradient-text {
+            background: linear-gradient(135deg, #60a5fa, #a78bfa, #2dd4bf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .bg-grid-pattern {
+            background-image: radial-gradient(rgba(99, 102, 241, 0.15) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 min-h-screen transition-colors duration-300">
+
+    <header class="sticky top-0 z-50 w-full glass-card border-b border-slate-200 dark:border-slate-800 transition-all">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <a href="../index.html" class="flex items-center space-x-3 group cursor-pointer" title="홈으로 이동 (../index.html)">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform">
+                    <i class="fa-solid me-0 fa-brain text-lg"></i>
+                </div>
+                <div>
+                    <span class="text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400 block">AI Learning Portfolio</span>
+                    <h1 class="text-base font-bold tracking-tight text-slate-900 dark:text-white leading-tight">부산 AI 인공지능 성찰문</h1>
+                </div>
+            </a>
+
+            <nav class="hidden md:flex items-center space-x-6 text-sm font-medium">
+                <a href="../index.html" class="flex items-center font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors">
+                    <i class="fa-solid fa-house mr-1.5"></i> 홈
+                </a>
+                <a href="#intro" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">1. 들어가는 말</a>
+                <a href="#reflection" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">2. 성찰 & 어려움</a>
+                <a href="#journey" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">10일간의 여정</a>
+                <a href="#conclusion" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">3. 나가는 말</a>
+            </nav>
+
+            <div class="flex items-center space-x-3">
+                <button id="themeToggle" class="p-2.5 rounded-lg bg-slate-200/80 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors" title="다크/라이트 모드">
+                    <i class="fa-solid fa-moon dark:hidden"></i>
+                    <i class="fa-solid fa-sun hidden dark:block"></i>
+                </button>
+                <button onclick="window.print()" class="hidden sm:inline-flex items-center px-3.5 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold transition-all shadow-sm">
+                    <i class="fa-solid fa-print mr-2"></i> 성찰문 인쇄
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <section class="relative overflow-hidden py-16 lg:py-24 bg-grid-pattern">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto space-y-6">
+                
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300 text-xs font-semibold">
+                    <span class="flex h-2 w-2 rounded-full bg-blue-600"></span>
+                    부산 AI 인공지능 수강 성찰 보고서
+                </div>
+
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-snug">
+                    10일간의 도전과 극복,<br>
+                    <span class="gradient-text">AI로 넓혀간 새로운 가능성의 기록</span>
+                </h2>
+
+                <p class="text-base sm:text-lg text-slate-600 dark:text-slate-300 font-normal leading-relaxed">
+                    학점 이수로 시작된 호기심에서 AI 앱 개발이라는 넘기 힘든 장벽까지.<br class="hidden sm:block">
+                    쉽지 않았던 순간들을 함께 넘어서며 값진 성장을 이뤄낸 이지후 님의 성찰 기록입니다.
+                </p>
+
+                <!-- Profile Badge & Meta -->
+                <div class="pt-4 flex flex-wrap items-center justify-center gap-4 text-sm text-slate-600 dark:text-slate-400">
+                    <div class="flex items-center space-x-2 bg-white dark:bg-slate-900 px-4 py-2 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800">
+                        <i class="fa-solid fa-user-circle text-blue-500"></i>
+                        <span class="font-medium text-slate-800 dark:text-slate-200">작성자: <strong>이지후</strong></span>
+                    </div>
+                    <div class="flex items-center space-x-2 bg-white dark:bg-slate-900 px-4 py-2 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800">
+                        <i class="fa-solid fa-calendar-check text-indigo-500"></i>
+                        <span class="font-medium text-slate-800 dark:text-slate-200">작성일: <strong>8월 6일</strong></span>
+                    </div>
+                    <div class="flex items-center space-x-2 bg-white dark:bg-slate-900 px-4 py-2 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800">
+                        <i class="fa-solid fa-graduation-cap text-teal-500"></i>
+                        <span class="font-medium text-slate-800 dark:text-slate-200">수업명: <strong>부산 AI 인공지능</strong></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 relative z-20">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="glass-card p-5 rounded-2xl shadow-sm text-center border-t-4 border-blue-500">
+                <div class="text-3xl font-black text-blue-600 dark:text-blue-400 mb-1">10일</div>
+                <div class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">교육 기간</div>
+                <p class="text-xs text-slate-600 dark:text-slate-300 mt-1">집중 학습 & 협동 과정</p>
+            </div>
+            <div class="glass-card p-5 rounded-2xl shadow-sm text-center border-t-4 border-indigo-500">
+                <div class="text-3xl font-black text-indigo-600 dark:text-indigo-400 mb-1">AI + App</div>
+                <div class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">핵심 실습 내용</div>
+                <p class="text-xs text-slate-600 dark:text-slate-300 mt-1">AI 도구 활용 및 앱 연동</p>
+            </div>
+            <div class="glass-card p-5 rounded-2xl shadow-sm text-center border-t-4 border-violet-500">
+                <div class="text-3xl font-black text-violet-600 dark:text-violet-400 mb-1">협동심</div>
+                <div class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">주요 성장 역량</div>
+                <p class="text-xs text-slate-600 dark:text-slate-300 mt-1">함께 어려움을 해결한 팀워크</p>
+            </div>
+            <div class="glass-card p-5 rounded-2xl shadow-sm text-center border-t-4 border-teal-500">
+                <div class="text-3xl font-black text-teal-600 dark:text-teal-400 mb-1">100%</div>
+                <div class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">경험의 가치</div>
+                <p class="text-xs text-slate-600 dark:text-slate-300 mt-1">일상속 실천으로 연결</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content Container -->
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
+
+        <section id="intro" class="scroll-mt-24">
+            <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80 dark:border-slate-800 transition-all hover:shadow-md">
+                <div class="flex items-center space-x-3 mb-6">
+                    <span class="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold text-sm">1</span>
+                    <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">들어가는 말</h3>
+                </div>
+
+                <div class="relative pl-6 border-l-4 border-blue-500 py-1 my-4 bg-slate-50 dark:bg-slate-800/40 rounded-r-xl p-4">
+                    <p class="text-base sm:text-lg font-semibold text-slate-800 dark:text-slate-200 italic">
+                        "학점이 부족해 학점을 채우기 위해 들어왔다."
+                    </p>
+                </div>
+
+                <div class="text-slate-600 dark:text-slate-300 leading-relaxed space-y-3 text-sm sm:text-base pt-2">
+                    <p>
+                        솔직히 처음 이 수업에 참여하게 된 계기는 거창한 야망이나 거창한 계획이 아닌 <strong>'부족한 학점을 채우기 위한 목적'</strong>이었습니다. 
+                        수강 신청 당시에는 단순히 학점 이수만을 목표로 시작했던 과목이었습니다.
+                    </p>
+                    <p>
+                        그러나 열흘이라는 기간 동안 부산 AI 인공지능 수업이 진행되면서, 단지 학점을 채우는 수동적인 자리가 아니라 예상치 못했던 깊이 있는 배움과 도전의 기회로 바뀌기 시작했습니다.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="reflection" class="scroll-mt-24">
+            <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80 dark:border-slate-800">
+                <div class="flex items-center space-x-3 mb-6">
+                    <span class="w-8 h-8 rounded-lg bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold text-sm">2</span>
+                    <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">자신에 대한 성찰</h3>
+                </div>
+
+                <p class="text-slate-600 dark:text-slate-300 mb-6 text-sm sm:text-base leading-relaxed">
+                    수업을 이수하는 동안 단순히 지식을 전달받는 데 그치지 않고, 직접 AI 도구를 활용하고 팀원들과 소통하는 과정에서 나 자신의 가능성과 한계를 함께 성찰할 수 있었습니다.
+                </p>
+
+                <!-- Highlight Cards Grid -->
+                <div class="grid md:grid-cols-2 gap-6 mb-8">
+                    <!-- Learned Point 1 -->
+                    <div class="p-5 rounded-2xl bg-gradient-to-br from-blue-50/50 to-indigo-50/50 dark:from-slate-800/60 dark:to-slate-800/30 border border-blue-100 dark:border-slate-700">
+                        <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center mb-4 shadow-sm">
+                            <i class="fa-solid fa-wand-magic-sparkles text-lg"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-900 dark:text-white text-base mb-2">AI 인공지능의 실전 활용 능력 습득</h4>
+                        <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+                            이 수업을 통해 인공지능을 단순한 기술이 아닌 <strong>일상과 과제에서 효과적으로 잘 활용하는 방법</strong>을 배웠습니다. AI 도구를 효과적으로 다루는 기술을 한 단계 높일 수 있었습니다.
+                        </p>
+                    </div>
+
+                    <!-- Learned Point 2 -->
+                    <div class="p-5 rounded-2xl bg-gradient-to-br from-indigo-50/50 to-purple-50/50 dark:from-slate-800/60 dark:to-slate-800/30 border border-indigo-100 dark:border-slate-700">
+                        <div class="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center mb-4 shadow-sm">
+                            <i class="fa-solid fa-users text-lg"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-900 dark:text-white text-base mb-2">팀원들과 함께한 협동심 배양</h4>
+                        <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+                            혼자서는 해결하기 힘들었던 복잡한 과제들을 팀원들과 함께 고민하고 다듬으며 <strong>동료 간의 긴밀한 협동심</strong>을 키울 수 있었습니다.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Hardest Challenge Block -->
+                <div class="p-6 rounded-2xl bg-rose-50/70 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900/40">
+                    <div class="flex items-start space-x-3">
+                        <div class="w-10 h-10 rounded-xl bg-rose-500 text-white flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <i class="fa-solid fa-triangle-exclamation text-lg"></i>
+                        </div>
+                        <div class="space-y-2">
+                            <h4 class="font-bold text-rose-900 dark:text-rose-200 text-base">가장 어려웠던 점 & 최대의 난관</h4>
+                            <div class="relative pl-4 border-l-2 border-rose-400 my-2">
+                                <p class="text-sm sm:text-base font-semibold text-rose-800 dark:text-rose-300 italic">
+                                    "어려웠던 점은 전부 다 어려웠다. 그래도 특히 어려웠던 점은 앱에 연결시키는 게 어려웠다."
+                                </p>
+                            </div>
+                            <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+                                기초 개념부터 실습까지 사실 모든 과정이 쉽지 않고 전부 다 어렵게 느껴졌습니다. 
+                                그중에서도 **생성된 AI 모델이나 데이터 로직을 실제 앱(Application) 환경에 연결하고 동동시키는 작업**은 수많은 오류와 직면했던 가장 혹독한 고비였습니다. 
+                                하지만 이 어려움을 끝까지 마주하고 하나씩 풀어낸 과정 자체가 커다란 성장판이 되었습니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="journey" class="scroll-mt-24">
+            <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80 dark:border-slate-800">
+                <div class="mb-8">
+                    <span class="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider block mb-1">10 Days Intensive Course</span>
+                    <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">열흘간의 몰입 타임라인</h3>
+                </div>
+
+                <div class="relative border-l-2 border-slate-200 dark:border-slate-800 ml-4 space-y-8">
+                    <!-- Day 1-2 -->
+                    <div class="relative pl-6">
+                        <span class="absolute -left-2.5 top-1.5 w-5 h-5 rounded-full bg-blue-500 border-4 border-white dark:border-slate-900"></span>
+                        <div class="text-xs font-bold text-blue-600 dark:text-blue-400">1~3일차</div>
+                        <h4 class="font-bold text-slate-900 dark:text-white text-base">도전의 시작 & 학점 수강 동기</h4>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 mt-1">
+                            학점을 채우기 위해 시작한 첫걸음. 생소한 AI 개념과 인터페이스를 접하며 기초 익히기.
+                        </p>
+                    </div>
+
+                    <!-- Day 4-7 -->
+                    <div class="relative pl-6">
+                        <span class="absolute -left-2.5 top-1.5 w-5 h-5 rounded-full bg-indigo-500 border-4 border-white dark:border-slate-900"></span>
+                        <div class="text-xs font-bold text-indigo-600 dark:text-indigo-400">4~7일차</div>
+                        <h4 class="font-bold text-slate-900 dark:text-white text-base">AI 활용 심화 & 협동 프로젝트</h4>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 mt-1">
+                            AI 활용법을 구체적으로 익히고, 팀원들과 소통하며 서로 도우며 협동심을 키워나간 시기.
+                        </p>
+                    </div>
+
+                    <!-- Day 8-10 -->
+                    <div class="relative pl-6">
+                        <span class="absolute -left-2.5 top-1.5 w-5 h-5 rounded-full bg-teal-500 border-4 border-white dark:border-slate-900"></span>
+                        <div class="text-xs font-bold text-teal-600 dark:text-teal-400">8~10일차</div>
+                        <h4 class="font-bold text-slate-900 dark:text-white text-base">앱 연결 실습의 고난 & 완성</h4>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 mt-1">
+                            가장 막막하고 전부 다 어렵게 느껴졌던 앱 연동 작업을 포기하지 않고 끝까지 완수하여 마무리.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="conclusion" class="scroll-mt-24">
+            <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80 dark:border-slate-800">
+                <div class="flex items-center space-x-3 mb-6">
+                    <span class="w-8 h-8 rounded-lg bg-teal-100 dark:bg-teal-900/50 text-teal-600 dark:text-teal-400 flex items-center justify-center font-bold text-sm">3</span>
+                    <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">나가는 말 및 다짐</h3>
+                </div>
+
+                <div class="relative pl-6 border-l-4 border-teal-500 py-1 my-4 bg-slate-50 dark:bg-slate-800/40 rounded-r-xl p-4">
+                    <p class="text-base sm:text-lg font-semibold text-slate-800 dark:text-slate-200 italic">
+                        "느낀 점은 열흘 동안 쉽지 않았지만 이 수업을 통해 배운 게 많고 값진 경험이었던 거 같다.<br>이 수업을 통해 배운 걸로 일생활에서 사용할 때가 있으면 잘 사용하겠다."
+                    </p>
+                </div>
+
+                <div class="text-slate-600 dark:text-slate-300 leading-relaxed space-y-4 text-sm sm:text-base pt-2">
+                    <p>
+                        학점을 채우기 위한 수동적인 마음으로 들어섰던 10일 전의 저와, 모든 난관을 거쳐 수업을 마친 지금의 저는 큰 차이가 있습니다. 
+                        열흘이라는 시간은 매 순간이 도전의 연속이었고 결코 쉽지 않은 시간이었지만, 과정 하나하나가 저에게 실질적인 배움과 값진 자신감을 선물해 주었습니다.
+                    </p>
+                    <p>
+                        앞으로 이 수업에서 배우고 경험한 AI 인공지능 지식과 협동의 가치를 일상생활 속 다양한 상황과 문제를 해결할 때 적극적으로 적용하고 활용하겠습니다.
+                    </p>
+                </div>
+
+                <!-- Callout Quote Card -->
+                <div class="mt-8 p-6 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-indigo-500/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div class="space-y-1 text-center sm:text-left">
+                        <div class="text-xs uppercase tracking-widest text-blue-200 font-semibold">Key Takeaway</div>
+                        <div class="text-lg font-bold">"쉽지 않았던 10일, 일상 속 더 큰 가치로 연결할 배움"</div>
+                    </div>
+                    <button onclick="copyEssayText()" class="px-4 py-2.5 rounded-xl bg-white text-indigo-600 font-semibold text-xs hover:bg-indigo-50 transition-colors shadow-sm flex items-center shrink-0">
+                        <i class="fa-solid fa-copy mr-2"></i> 성찰문 요약 복사
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Interactive Reflection Notes & Feedback Section -->
+        <section class="bg-slate-100 dark:bg-slate-900/60 rounded-3xl p-6 sm:p-8 border border-slate-200/60 dark:border-slate-800">
+            <h4 class="text-base font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
+                <i class="fa-solid fa-comment-dots text-blue-500"></i> 나만의 성찰 메모 작성해보기
+            </h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">
+                이 웹페이지를 확인한 후 스스로에게 전하는 다짐이나 메모를 남겨보세요. (브라우저에 저장됩니다)
+            </p>
+            <div class="space-y-3">
+                <textarea id="personalNote" rows="3" placeholder="예: 앱 연동 과정에서 경험했던 오류 해결 과정을 다시 복습해보기..." class="w-full p-3 text-sm rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"></textarea>
+                <div class="flex justify-between items-center">
+                    <span id="saveStatus" class="text-xs text-teal-600 dark:text-teal-400 font-medium opacity-0 transition-opacity">저장되었습니다!</span>
+                    <button onclick="saveNote()" class="px-4 py-2 rounded-lg bg-slate-800 dark:bg-slate-700 text-white text-xs font-semibold hover:bg-slate-700 dark:hover:bg-slate-600 transition-colors">
+                        메모 저장하기
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-200 dark:border-slate-800 py-8 text-center text-xs text-slate-500 dark:text-slate-400">
+        <div class="max-w-5xl mx-auto px-4 space-y-2">
+            <p>© 2026 이지후 (Lee Ji-hoo) - 부산 AI 인공지능 성찰문 Portfolio</p>
+            <p class="text-slate-400 dark:text-slate-600">본 페이지는 이지후 님의 작성 소감 원본을 바탕으로 정성스럽게 구성되었습니다.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Dark Mode Toggle Logic
+        const themeToggleBtn = document.getElementById('themeToggle');
+        
+        // Initialize Theme from system preference or default
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+        });
+
+        // Copy Essay Functionality
+        function copyEssayText() {
+            const textToCopy = `[부산 AI 인공지능 소감 및 성찰문]\n작성자: 이지후 | 작성일: 8월 6일\n\n1. 들어가는 말:\n학점이 부족해 학점을 채우기 위해 들어왔다.\n\n2. 자신에 대한 성찰:\n이 수업을 통해 AI를 잘 활용하는 방법도 배우고 협동심도 기를 수 있었다. 어려웠던 점은 전부 다 어려웠다. 그래도 특히 어려웠던 점은 앱에 연결시키는 게 어려웠다.\n\n3. 나가는 말:\n느낀 점은 열흘 동안 쉽지 않았지만 이 수업을 통해 배운 게 많고 값진 경험이었던 거 같다. 이 수업을 통해 배운 걸로 일상생활에서 사용할 때가 있으면 잘 사용하겠다.`;
+            
+            // Standard execCommand fallback for iFrame compatibility
+            const tempInput = document.createElement('textarea');
+            tempInput.value = textToCopy;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            showToast('성찰문 요약 내용이 클립보드에 복사되었습니다.');
+        }
+
+        // Custom Toast Notification (Replacing alert)
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-5 right-5 z-50 bg-slate-900 text-white dark:bg-white dark:text-slate-900 px-4 py-3 rounded-xl shadow-xl text-xs font-semibold transition-all transform translate-y-2 opacity-0 flex items-center space-x-2';
+            toast.innerHTML = `<i class="fa-solid fa-circle-check text-teal-400 dark:text-teal-600"></i><span>${message}</span>`;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            }, 10);
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-2', 'opacity-0');
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 3000);
+        }
+
+        // Local Note Saving Logic
+        function saveNote() {
+            const noteContent = document.getElementById('personalNote').value;
+            localStorage.setItem('leejihoo_ai_note', noteContent);
+            const statusEl = document.getElementById('saveStatus');
+            statusEl.classList.remove('opacity-0');
+            setTimeout(() => {
+                statusEl.classList.add('opacity-0');
+            }, 2000);
+        }
+
+        // Load Note on Page Load
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedNote = localStorage.getItem('leejihoo_ai_note');
+            if (savedNote) {
+                document.getElementById('personalNote').value = savedNote;
+            }
+        });
+    </script>
+</body>
+</html>
